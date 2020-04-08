@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import CommentView, MyCommentView
 
+
 app_name = 'post'
 
 urlpatterns = [
