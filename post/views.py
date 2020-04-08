@@ -23,9 +23,5 @@ class CommentView(View):
 
 class MyCommentView(View):
     def get(self, request, user_id):
-        my_comment = []
         comments = Comment.objects.filter(user_id=user_id).values()
-        for comment in comments:
-            if comment['user_id'] == user_id:
-                my_comment.append(comment['comment'])
-        return JsonResponse({'comments': my_comment}, status=200)
+        return JsonResponse({'comments': list(comments)}, status=200)
