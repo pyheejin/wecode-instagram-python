@@ -5,15 +5,19 @@ from django.http import HttpResponse, JsonResponse
 
 from .models import Comment
 from account.models import User
+from .utils import login_decorator
 
 
 class CommentView(View):
+    @login_decorator
     def post(self, request):
         data = json.loads(request.body)
+
         Comment(
-            user=User.objects.get(name=data['name']),
+            user = request.user,
             comment=data['comment'],
         ).save()
+        print("request.user=", end=""), print(request.user)
         return HttpResponse(status=200)
 
     def get(self, request):
